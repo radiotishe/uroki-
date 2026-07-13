@@ -477,8 +477,11 @@ function svCopySync(t){let ok=false;
 function svSend(){const t=svCollect();
   if(t.split("\n").length<3){toast("Сначала ответьте хотя бы на один вопрос");return;}
   svCopySync(t);
-  toast("Ответы скопированы. Вставьте их в чат");
-  const url="https://t.me/olga_laska";
+  const enc=encodeURIComponent(t);
+  let url,msg;
+  if(enc.length<3500){url="https://t.me/share/url?url="+enc;msg="Выберите мой профиль и нажмите отправить";}
+  else{url="https://t.me/olga_laska";msg="Ответы скопированы. Вставьте их в чат";}
+  toast(msg);
   const w=window.open(url,"_blank");
   if(!w||w.closed||typeof w.closed==="undefined"){location.href=url;}}
 function svCopy(){const t=svCollect();
